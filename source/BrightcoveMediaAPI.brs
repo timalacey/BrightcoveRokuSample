@@ -20,14 +20,17 @@ function GetPlaylistConfig() as Object
     playlists: [], thumbs: {}
   }
   raw = GetStringFromURL(configUrl)
-  playlists = ParseJSON(raw)
-
-  ' Brightcove does not have multiple thumbnails for playlists, so we'll use the HD one and scale down
-  for each list in playlists.items
-    'print "List: " ; list.id
-    out.playlists.push(list.id)
-    out.thumbs[list.id]  = list.thumbnailurl
-  next
+  if raw.len() > 0
+    playlists = ParseJSON(raw)
+    if playlists <> invalid and playlists.LookUp("items") <> invalid
+      ' Brightcove does not have multiple thumbnails for playlists, so we'll use the HD one and scale down
+      for each list in playlists.items
+        'print "List: " ; list.id
+        out.playlists.push(list.id)
+        out.thumbs[list.id]  = list.thumbnailurl
+      next
+    end if
+  end if
   return out
 End Function
 

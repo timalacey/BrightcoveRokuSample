@@ -4,6 +4,7 @@
 '
 
 function GetStringFromURL(url, bcovPolicy = "")
+  ? "GetStringFromURL() url="; url
   result = ""
   timeout = 10000
 
@@ -17,6 +18,7 @@ function GetStringFromURL(url, bcovPolicy = "")
   ut.SetPort(CreateObject("roMessagePort"))
    if bcovPolicy <> ""
      ut.AddHeader("BCOV-Policy", bcovPolicy)
+     ? "GetStringFromURL() add header 'BCOV-Policy = "; bcovPolicy; "'"
    end if
    ut.SetURL(url)
   if ut.AsyncGetToString()
