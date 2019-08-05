@@ -44,22 +44,13 @@ You can change a lot in the sample application without changing too much code.  
 
 #### B. source/Config.brs
 1. appName: this is the name of the application, appearing in the upper right corner of the app
-2. useSmartPlayer: whether to use a Smart Player or Brightcove Player to retrieve playlist and video information.  Two sections below describe in detail the specific settings you need to then set for the player in use.
-3. alwaysShowPlaylists: if set to false, the app will not show the playlists screen if there is only one playlist. It will go straight to the video assets instead.
-4. initTheme settings: controls the look and feel of your application. This is well documented in the Roku SDK documents
+2. alwaysShowPlaylists: if set to false, the app will not show the playlists screen if there is only one playlist. It will go straight to the video assets instead.
+3. initTheme settings: controls the look and feel of your application. This is well documented in the Roku SDK documents
 
 #### C. source/Config.brs for Smart Players
+> [April 1, 2018, all support for the Smart Player API was terminated.](https://support.brightcove.com/changes-video-cloud-service)
 
-The smart player is most people are using for their players in Brightcove (as of early 2015).  If this is what you are used to using, you can set up one of these players for use with this application:
-
-1. Create a custom smart player using one of the multi-playlist player templates, and at
-   least one playlist for your Roku content.  You can add as many playlists as you'd like
-2. You can use a thumbnail for each playlist (304x237 pixels), or the poster image of the first video in the playlist will be used for the playlist thumbnail.
-
-Once the above is set up, you can set up the player in source/Config.brs using the following settings:
-
-1. brightcoveToken: your Brightcove API key with read permission and URL access. This can be       found in Account Settings > API Management in [VideoCloud](https://videocloud.brightcove.com)
-2. playerID: the player ID of the smart player you created
+See [this migration note](https://support.brightcove.com/smart-player-brightcove-player-api-comparison).
 
 #### B. source/Config.brs for Brightcove Players
 

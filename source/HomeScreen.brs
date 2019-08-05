@@ -14,17 +14,7 @@ sub HomeScreen(breadLeft, breadRight, playlists, thumbs)
 
   ' get the playlist data if needed
   bcConfig = Config()
-  if bcConfig.useSmartPlayer
-    bc = BrightcoveMediaAPI()
-    content = bc.GetPlaylists(playlists, thumbs)
-    if content = invalid or content.count() = 0
-      '' from roku-sdk/dialogs
-      ShowConnectionFailed()
-      return
-    end if
-  else
-    content = playlists
-  end if
+  content = playlists
 
   ' let's not show playlists if there's only one
   if content.count() = 1 and bcConfig.alwaysShowPlaylists = false

@@ -12,16 +12,7 @@ sub PlaylistScreen(show, leftBread, rightBread)
 
   ' get the playlist content if needed
   bcConfig = Config()
-  if bcConfig.useSmartPlayer
-    bc = BrightcoveMediaAPI()
-    content = bc.GetVideosForPlaylist(show.playlistID)
-    if content = invalid or content.count() = 0
-      ShowConnectionFailed()
-      return
-    end if
-  else
-    content = show.content
-  end if
+  content = show.content
 
   selectedVideo = 0
   screen.SetContentList(content)

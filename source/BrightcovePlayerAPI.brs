@@ -1,6 +1,5 @@
 '
 ' Retrieves playlist and video information that begin with a Brightcove Player.
-' If you are using a Smart Player instead, see BrightcoveMediaAPI
 '
 ' FIXME: handle multiple playlists (once the Brightcove Player supports this and/or
 ' by handling the FIXME listed below for custom support)
@@ -79,6 +78,7 @@ function GeneratePlaylist(accountId, playlistId, policyKey)
 print playbackUrl
   playlistData = GetStringFromURL(playbackUrl, policyKey)
   playlist = ParseJSON(playlistData)
+
   'PrintAA(playlist)
 
   ' construct the playlist details
@@ -88,7 +88,6 @@ print playbackUrl
     shortDescriptionLine2: Left(ValidStr(playlist.description), 60)
     ' we have to choose the first video instead of using the playlist poster,
     ' since the playlist poster is not exposed in the playback API currently
-    ' FIXME: use the https logic in BrightcoveMediaAPI for poster URLs?
     sdPosterURL: ValidStr(playlist.videos[0].poster)
     hdPosterURL: ValidStr(playlist.videos[0].poster)
     content: []

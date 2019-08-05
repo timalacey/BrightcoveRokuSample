@@ -17,11 +17,7 @@ sub Main()
   screenFacade.SetBreadcrumbText(bcConfig.appName, "")
 
   ' get playlist data from Brightcove
-  if bcConfig.useSmartPlayer
-    playlistData = BrightcoveMediaAPI().GetPlaylistConfig()
-  else
-    playlistData = BrightcovePlayerAPI().GetPlaylistData()
-  end if
+  playlistData = BrightcovePlayerAPI().GetPlaylistData()
 
   ' show an error if the initial data call went wrong, which either means Config
   ' is incorrect or Brightcove is having issues

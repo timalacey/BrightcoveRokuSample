@@ -12,6 +12,7 @@ Function CreateURLTransferObject(url As String) as Object
     obj = CreateObject("roUrlTransfer")
     obj.SetPort(CreateObject("roMessagePort"))
     obj.SetUrl(url)
+    ? "CreateURLTransferObject() |url="; url; "|"
     obj.AddHeader("Content-Type", "application/x-www-form-urlencoded")
     obj.EnableEncodings(true)
     return obj
@@ -47,6 +48,7 @@ Function CreateURLTransferObject2(url As String, contentHeader As String) as Obj
     obj = CreateObject("roUrlTransfer")
     obj.SetPort(CreateObject("roMessagePort"))
     obj.SetUrl(url)
+    ? "CreateURLTransferObject2() |url="; url; "|contentHeader="; contentHeader; "|"
 	obj.AddHeader("Content-Type", contentHeader)
     obj.EnableEncodings(true)
     return obj

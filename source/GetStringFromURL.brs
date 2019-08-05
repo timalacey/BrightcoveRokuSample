@@ -4,23 +4,22 @@
 '
 
 function GetStringFromURL(url, bcovPolicy = "")
-  ? "GetStringFromURL() url="; url
   result = ""
   timeout = 10000
 
-   ut = CreateObject("roURLTransfer")
- 
-   ' allow for https
-   ut.SetCertificatesFile("common:/certs/ca-bundle.crt")
-   ut.AddHeader("X-Roku-Reserved-Dev-Id", "")
-   ut.InitClientCertificates()
- 
+  ut = CreateObject("roURLTransfer")
   ut.SetPort(CreateObject("roMessagePort"))
-   if bcovPolicy <> ""
-     ut.AddHeader("BCOV-Policy", bcovPolicy)
-     ? "GetStringFromURL() add header 'BCOV-Policy = "; bcovPolicy; "'"
-   end if
-   ut.SetURL(url)
+
+  ' allow for https
+  ut.SetCertificatesFile("common:/certs/ca-bundle.crt")
+  ut.InitClientCertificates()
+
+  if bcovPolicy <> ""
+    ut.AddHeader("BCOV-Policy", bcovPolicy)
+  end if
+  ut.SetURL(url)
+  ? "GetStringFromURL() |url="; url; "|header 'BCOV-Policy = "; bcovPolicy; "'"
+  
   if ut.AsyncGetToString()
     event = wait(timeout, ut.GetPort())
     if type(event) = "roUrlEvent"
