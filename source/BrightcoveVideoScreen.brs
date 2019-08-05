@@ -5,4 +5,3 @@
 Function BrightcoveVideoScreen(video As Object)
   showVideoScreen(video)
 End Function
-

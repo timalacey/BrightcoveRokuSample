@@ -1,23 +1,19 @@
 ''
 '' Used to manage account settings and theme
 ''
-
 Function Config() As Object
   this = {
     ' the name to show on top of screens
-    appName: "Test Application"
+    appName: "Home"
     ' whether to show the playlist screen, even if there is only one playlist
-    alwaysShowPlaylists: true
+    alwaysShowPlaylists: false
 
-    '' Smart Player setup: this block of config is needed when using a Smart Player.
-    ' the media API token, which MUST be a Brightcove read token with URL access
-    brightcoveToken: "1haf2aFRHkf2j4_cfBV3O0EOYDKs-0K1M-nqUT6qM1JY4zNaAvab4w.."
     ' the smart player is used for its attached playlists
     playerID: "4201806590001"
 
     '' Brightcove Player setup: this block of config is needed when using a Brightcove
     '' Player, the latest player system
-    playerURL: "http://players.brightcove.net/2549849259001/0e39f135-a34c-490d-8a3f-631e55a60926_default/index.html?playlistId=4201918719001"
+    playerURL: "http://players.brightcove.net/2549849259001/0e39f135-a34c-490d-8a3f-631e55a60926_default/index.html?playlistId=4201918720001"
 
     initTheme: initTheme
   }

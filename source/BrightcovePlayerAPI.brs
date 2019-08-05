@@ -20,13 +20,6 @@ function GetPlaylistData()
   accountId = Mid(playerURL, accountStart, accountEnd - accountStart)
   print "Using account ID "; accountId
 
-  ' find the playlist ID in the URL, if it's there
-  playlistStart = Instr(1, playerURL, "playlistId=") + 11
-  playlists = []
-  if playlistStart > 11
-    playlists.push(Mid(playerURL, playlistStart))
-  end if
-
   ' find the config.json URL where we can get more player details.  This is always
   ' located at the same folder level where index.html can be found.
   repoEnd = Instr(accountEnd + 1, playerURL, "/")
@@ -39,32 +32,23 @@ function GetPlaylistData()
   configJson = ParseJSON(configData)
   PrintAA(configJson)
 
-  ' get the policy key used for getting more playlist/video info
+  ' get the policy key
   policyKey = configJson.video_cloud.policy_key
 
-  ' FIXME: get playlists stored in config.json working.  Since the Brightcove Player
-  ' does not currently have multiple playlist support, I tried to add a special
-  ' section in the config specific to Roku for this.  The playlists info comes
-  ' through, but the string is in an exponent form that I can't seem to convert
-  ' to a normal string.  Once this works, using the following two commands can
-  ' update a player to use multiple playlists:
-  ' curl -XPATCH --user $EMAIL --data '{ "roku_configuration": { "playlists": [ $PLAYLISTS ] } }' --header 'Content-Type: application/json' "https://players.api.brightcove.com/v1/accounts/$ACCOUNT/players/$PLAYER/configuration"
-   'curl -XPOST --user $EMAIL --header 'Content-Type: application/json' "https://players.api.brightcove.com/v1/accounts/$ACCOUNT/players/$PLAYER/publish"
-
-  ' get the playlists stored in our special section
-  'if configJson.roku_configuration <> invalid
-  '  for each playlist in configJson.roku_configuration.playlists
-  '    playlists.push(Str(playlist))
-  '  next
-  'end if
-
-  ' now we have enough information to start getting the playlist data and converting
-  ' it to the Roku data format
+  ' get playlistIds
+  playlistIds = []
+  if configJson.LookUp("roku_configuration") <> invalid and configJson.roku_configuration.LookUp("playlists") <> invalid
+    playlistIds.Append(configJson.roku_configuration.playlists)
+  end if
+  
+  ' fetch playlists
   out = {
     playlists: []
   }
-  for each playlistId in playlists
-    out.playlists.push(GeneratePlaylist(accountId, playlistId, policyKey))
+  for each playlistId in playlistIds
+    playlist = GeneratePlaylist(accountId, playlistId, policyKey)
+    ' ? "GetPlaylistData() playlist="; FormatJSON(playlist)
+    out.playlists.push(playlist)
   next
 
   return out
@@ -74,8 +58,8 @@ end function
 ' using the given policyKey to retrieve the needed information from Brightcove
 function GeneratePlaylist(accountId, playlistId, policyKey)
   print "Getting playlist data for " ; playlistId
-  playbackUrl = "https://edge.api.brightcove.com/playback/v1/accounts/" + accountId + "/playlists/" + playlistId
-print playbackUrl
+  playbackUrl = "https://edge.api.brightcove.com/playback/v1/accounts/" + accountId + "/playlists/" + playlistId.ToStr()
+  print playbackUrl
   playlistData = GetStringFromURL(playbackUrl, policyKey)
   playlist = ParseJSON(playlistData)
 

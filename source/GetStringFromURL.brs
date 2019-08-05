@@ -14,11 +14,11 @@ function GetStringFromURL(url, bcovPolicy = "")
   ut.SetCertificatesFile("common:/certs/ca-bundle.crt")
   ut.InitClientCertificates()
 
-  if bcovPolicy <> ""
+  if bcovPolicy.len() > 0
     ut.AddHeader("BCOV-Policy", bcovPolicy)
   end if
   ut.SetURL(url)
-  ? "GetStringFromURL() |url="; url; "|header 'BCOV-Policy = "; bcovPolicy; "'"
+  ? "GetStringFromURL() url="; url
   
   if ut.AsyncGetToString()
     event = wait(timeout, ut.GetPort())
